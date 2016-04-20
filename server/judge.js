@@ -1,0 +1,6 @@
+export class Judge {
+
+    constructor() {
+
+    }
+} 

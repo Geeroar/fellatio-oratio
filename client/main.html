@@ -4,10 +4,11 @@
 
 <body>
   <h1>Fuck you, you asshole!</h1>
+  {{> join }}
 </body>
 
 <template name="join">
-    {{> game.players.length}}
+    {{game.players.length}}
     <button>Join Game</button>
 </template>
 
