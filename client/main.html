@@ -4,7 +4,12 @@
 
 <body>
   <h1>Fuck you, you asshole!</h1>
-  {{> join }}
+  <p>Game: {{JSON.stringify(game)}}</p>
+  <div id="join">{{> join}}</div>
+  <div id="waitingForStart">{{> waitingForStart}}</div>
+  <div id="game">{{> game}}</div>
+  <div id="waitingForAnswer">{{> waitingForAnswer}}</div>
+  <div id="result">{{> result}}</div>
 </body>
 
 <template name="join">
@@ -12,3 +17,30 @@
     <button>Join Game</button>
 </template>
 
+<template name="waitingForStart">
+    <p>Waiting for other player to join...</p>
+</template>
+
+<template name="game">
+    <p>Pick your answer motherfucker...</p>
+    <select>
+        <option value="123">a: 1; b: 2; c: 3</option>
+        <option value="222">a: 2; b: 2; c: 2</option>
+        <option value="321">a: 3; b: 2; c: 1</option>
+    </select>
+    <button>Submit answer</button>
+</template>
+
+<template name="waitingForAnswer">
+    <p>Waiting for other player to answer...</p>
+</template>
+
+<template name="result">
+    <p>The results are:</p>
+    <ul>
+        <li>Your score: {{score}}</li>
+        <li>Your opponent's score: {{otherScore}}</li>
+    </ul>
+    <p>The winner is {{winner}}</p>
+    <button>Join new game</button>
+</template>
