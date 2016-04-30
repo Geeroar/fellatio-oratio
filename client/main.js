@@ -5,31 +5,60 @@ import {Game} from "./game";
 import {Games} from "../api/games.js";
 
 var game = {};
-var gameData = {players: []};
 
-Template.join.onCreated(function helloOnCreated() {
-    game = new Game();
-    var latestGameData = Games.findOne({}, {sort: {DateTime: -1, limit: 1}});
-    if (!latestGameData) {
-        gameData = Games.insert(gameData);
-    } else {
-        gameData = latestGameData;
-    }
-});
-
-Template.join.helpers({
-    game: gameData
-});
+Meteor.startup(() => updatePageState(game));
 
 Template.join.events({
     'click button'(event, instance) {
-        if (!gameData.players) {
-            gameData.players = [];
-        }
-        gameData.players.push({});
-        Games.update(gameData._id, {
-            $set: {players: gameData.players}
+        console.log("Before: " + JSON.stringify(game));
+        Meteor.call("joinGame", (err, result) => {
+            game = result;
+            Tracker.autorun(() => {
+                Meteor.subscribe('active-game', game._id);
+                console.log("After: " + JSON.stringify(game));
+                updatePageState(game._id);
+            });
         });
-
     }
 });
+
+updatePageState = gameId => {
+    var game;
+    if (gameId) {
+        game = Games.findOne({_id: gameId});
+    } else {
+        game = {};
+    }
+    console.log(JSON.stringify(game));
+    if (game.state == 'WAITING_FOR_START') {
+        $('#waitingForStart').show();
+        $('#game').hide();
+        $('#waitingForAnswer').hide();
+        $('#result').hide();
+        $('#join').hide();
+    } else if (game.state == 'IN_PROGRESS') {
+        $('#waitingForStart').hide();
+        $('#game').show();
+        $('#waitingForAnswer').hide();
+        $('#result').hide();
+        $('#join').hide();
+    } else if (game.state == 'WAITING_FOR_ANSWER') {
+        $('#waitingForStart').hide();
+        $('#game').hide();
+        $('#waitingForAnswer').show();
+        $('#result').hide();
+        $('#join').hide();
+    } else if (game.state == 'DONE') {
+        $('#waitingForStart').hide();
+        $('#game').hide();
+        $('#waitingForAnswer').hide();
+        $('#result').show();
+        $('#join').hide();
+    } else {
+        $('#waitingForStart').hide();
+        $('#game').hide();
+        $('#waitingForAnswer').hide();
+        $('#result').hide();
+        $('#join').show();
+    }
+}
