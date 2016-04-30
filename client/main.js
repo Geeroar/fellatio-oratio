@@ -1,7 +1,6 @@
-import {Template} from "meteor/templating";
+/**import {Template} from "meteor/templating";
 import {ReactiveVar} from "meteor/reactive-var";
 import "./main.html";
-import {Game} from "./game";
 import {Games} from "../api/games.js";
 
 var game = {};
@@ -61,4 +60,4 @@ updatePageState = gameId => {
         $('#result').hide();
         $('#join').show();
     }
-}
+};*/
