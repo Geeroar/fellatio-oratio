@@ -1,9 +1,6 @@
-/**import {Meteor} from 'meteor/meteor';
- import Games from '../imports/api/games';
- */
-import "../imports/api/tasks.js";
+import {Games} from "../imports/api/games.js";
 
-/**
+
 Meteor.startup(() => {
 
 });
@@ -21,10 +18,12 @@ Meteor.methods({
             id = Games.insert(activeGame);
             activeGame._id = id;
         } else {
-            Games.update({_id: activeGame._id}, {$set: {
-                state: "IN_PROGRESS",
-                numberOfPlayers: 2
-            }});
+            Games.update({_id: activeGame._id}, {
+                $set: {
+                    state: "IN_PROGRESS",
+                    numberOfPlayers: 2
+                }
+            });
             activeGame.state = "IN_PROGRESS";
             activeGame.numberOfPlayers = 2;
         }
@@ -33,4 +32,3 @@ Meteor.methods({
         return activeGame;
     }
 });
- */
