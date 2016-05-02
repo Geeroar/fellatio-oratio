@@ -1,11 +1,11 @@
 import React, {Component, PropTypes} from "react";
 import {createContainer} from "meteor/react-meteor-data";
 import {Games} from "../api/games.js";
-import WaitingForAnswer from "./WaitingForAnswer.jsx";
-import WaitingForPlayers from "./WaitingForPlayers.jsx";
-import Result from "./Result.jsx";
-import JoinGame from "./JoinGame.jsx";
-import Game from "./Game.jsx";
+import WaitingForAnswer from "./game/WaitingForAnswer.jsx";
+import WaitingForPlayers from "./game/WaitingForPlayers.jsx";
+import Result from "./game/Result.jsx";
+import JoinGame from "./game/JoinGame.jsx";
+import Game from "./game/Game.jsx";
 
 // App component - represents the whole app
 class App extends Component {
