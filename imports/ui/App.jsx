@@ -1,36 +1,13 @@
 import React, {Component, PropTypes} from "react";
 import {createContainer} from "meteor/react-meteor-data";
 import {Games} from "../api/games.js";
-import WaitingForAnswer from "./game/WaitingForAnswer.jsx";
-import WaitingForPlayers from "./game/WaitingForPlayers.jsx";
-import Result from "./game/Result.jsx";
 import JoinGame from "./game/JoinGame.jsx";
-import Game from "./game/Game.jsx";
 
-// App component - represents the whole app
 class App extends Component {
-    renderGame() {
-        var currentGame = this.props.games[0];
-        if (!currentGame) {
-            // Just print all the things
-            currentGame = {};
-            return (
-                <div>
-                    <JoinGame/>
-                    <WaitingForPlayers/>
-                    <Game game={currentGame}/>
-                    <WaitingForAnswer/>
-                    <Result score="10" otherScore="8" winner="Me!"/>
-                </div>
-            )
-        } else {
-            return (
-                <Game game={currentGame}/>
-            );
-        }
-    }
-
     render() {
+        const runningGames = this.props.games.map((game) => (
+            <li>A Game</li>
+        ));
         return (
             <div className="container">
                 <header>
@@ -38,7 +15,10 @@ class App extends Component {
                 </header>
 
                 <div>
-                    {this.renderGame()}
+                    <ul>
+                        {runningGames}
+                    </ul>
+                    <JoinGame/>
                 </div>
             </div>
         );

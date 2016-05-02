@@ -1,15 +1,23 @@
 import React, {Component, PropTypes} from "react";
+import {browserHistory} from "react-router";
 
 export default class JoinGame extends Component {
     joinGame() {
         var game;
         console.log('Clicked Join Game');
-        Meteor.call("joinGame", (err, result) => {
+        Meteor.call('joinGame', (err, result) => {
+            var path = '';
             game = result;
-            Tracker.autorun(() => {
-                Meteor.subscribe('active-game', game._id);
-                console.log("After: " + JSON.stringify(game));
-            });
+            console.log(game);
+            if (game.state === 'IN_PROGRESS') {
+                path = `/game/${game._id}`;
+            } else if (game.state = 'WAITING_FOR_START') {
+                path = `/waiting-for-players/${game._id}`;
+            } else {
+                path = '/error';
+            }
+
+            browserHistory.push(path);
         });
     }
 
